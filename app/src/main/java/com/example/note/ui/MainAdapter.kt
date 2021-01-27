@@ -10,7 +10,7 @@ import com.example.note.model.Note
 
 class MainAdapter : RecyclerView.Adapter<MainAdapter.NoteViewHolder>() {
 
-    var notes: MutableList<Note> = mutableListOf()
+    var notes: List<Note> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -26,7 +26,6 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.NoteViewHolder>() {
     }
 
     override fun getItemCount(): Int = notes.size
-
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val ui: ItemNoteBinding = ItemNoteBinding.bind(itemView)

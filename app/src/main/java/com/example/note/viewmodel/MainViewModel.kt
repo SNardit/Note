@@ -16,12 +16,4 @@ class MainViewModel : ViewModel() {
     }
 
     fun viewState(): LiveData<MainViewState> = viewStateLiveData
-
-    fun addNoteToRep() {
-        Repository.addNote(Note(" ", " "))
-    }
-
-    fun updateNotes() {
-        viewStateLiveData.value = MainViewState(Repository.notes)
-    }
 }

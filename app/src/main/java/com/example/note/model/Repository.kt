@@ -21,10 +21,4 @@ object Repository {
             0xffb2ff59.toInt()
         )
     )
-
-    fun addNote(note: Note) {
-        notes.add(note)
-        MainViewModel().updateNotes()
-    }
-
 }
