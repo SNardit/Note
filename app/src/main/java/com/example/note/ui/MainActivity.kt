@@ -1,7 +1,7 @@
 package com.example.note.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.note.databinding.ActivityMainBinding
@@ -21,14 +21,24 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(ui.toolbar)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        adapter = MainAdapter()
+        adapter = MainAdapter(object : OnItemClickListener {
+            override fun onItemClick(note: Note) {
+                openNoteScreen(note)
+            }
+        })
         ui.mainRecycler.adapter = adapter
 
-        ui.addNotes.setOnClickListener {
-            MainViewState(adapter.notes).addNewNote()
-        }
         viewModel.viewState().observe(this, Observer<MainViewState> { state ->
             state?.let { adapter.notes = state.notes as MutableList<Note> }
         })
+
+        ui.fab.setOnClickListener { openNoteScreen() }
     }
+
+    private fun openNoteScreen(note: Note? = null) {
+        startActivity(NoteActivity.getStartIntent(this, note))
+    }
+
 }
+
+
