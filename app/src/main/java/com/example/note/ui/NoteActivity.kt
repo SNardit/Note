@@ -8,7 +8,6 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.note.R
 import com.example.note.databinding.ActivityNoteBinding
@@ -20,21 +19,22 @@ import java.util.*
 
 private const val SAVE_DELAY = 2000L
 
-class NoteActivity : AppCompatActivity() {
+class NoteActivity : BaseActivity<Note?, NoteViewState>() {
 
     companion object {
         const val EXTRA_NOTE = "NoteActivity.extra.NOTE"
 
-        fun getStartIntent(context: Context, note: Note?): Intent {
+        fun getStartIntent(context: Context, noteId: String?): Intent {
             val intent = Intent(context, NoteActivity::class.java)
-            intent.putExtra(EXTRA_NOTE, note)
+            intent.putExtra(EXTRA_NOTE, noteId)
             return intent
         }
     }
 
     private var note: Note? = null
-    private lateinit var ui: ActivityNoteBinding
-    private lateinit var viewModel: NoteViewModel
+    override val ui: ActivityNoteBinding by lazy { ActivityNoteBinding.inflate(layoutInflater) }
+    override val viewModel: NoteViewModel by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
+    override val layoutRes: Int = R.layout.activity_note
     private val textChangeListener = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             triggerSaveNote()
@@ -47,17 +47,11 @@ class NoteActivity : AppCompatActivity() {
         override fun afterTextChanged(p0: Editable?) {
             //do nothing
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ui = ActivityNoteBinding.inflate(layoutInflater)
         setContentView(ui.root)
-
-        viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
-
-        note = intent.getParcelableExtra(EXTRA_NOTE)
         setSupportActionBar(ui.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -67,8 +61,14 @@ class NoteActivity : AppCompatActivity() {
             getString(R.string.new_note_title)
         }
 
-        initView()
+        val noteId = intent.getStringExtra(EXTRA_NOTE)
+        noteId?.let { note ->
+            viewModel.loadNote(note)
+        }
 
+        if (noteId == null) supportActionBar?.title = getString(R.string.new_note_title)
+
+        initView()
     }
 
     private fun initView() {
@@ -84,7 +84,7 @@ class NoteActivity : AppCompatActivity() {
             Color.PINK -> R.color.color_pink
             Color.GREEN -> R.color.color_green
             Color.BLUE -> R.color.color_blue
-            else -> R.color.color_black
+            else -> R.color.color_blue
         }
 
         ui.toolbar.setBackgroundColor(resources.getColor(color))
@@ -119,5 +119,10 @@ class NoteActivity : AppCompatActivity() {
 
             if (note != null) viewModel.saveChanges(note!!)
         }, SAVE_DELAY)
+    }
+
+    override fun renderData(data: Note?) {
+        this.note = data
+        initView()
     }
 }

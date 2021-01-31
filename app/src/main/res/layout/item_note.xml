@@ -2,7 +2,7 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/indent_item_note_card_view"
+    style="@style/ItemNoteCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:backgroundTint="#8EA34E">
@@ -14,14 +14,14 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/margin_title"
+            style="@style/ItemNoteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Some text" />
 
         <TextView
             android:id="@+id/body"
-            style="@style/margin_and_size_text"
+            style="@style/ItemNoteBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Some text" />
