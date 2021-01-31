@@ -2,7 +2,7 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/margin_cardView"
+    style="@style/indent_item_note_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:backgroundTint="#8EA34E">
@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/body"
-            style="@style/margin_text"
+            style="@style/margin_and_size_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Some text" />
