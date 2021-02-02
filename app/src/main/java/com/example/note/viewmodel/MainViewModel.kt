@@ -4,7 +4,6 @@ import androidx.lifecycle.Observer
 import com.example.note.model.Note
 import com.example.note.model.NoteResults
 import com.example.note.model.Repository
-import com.example.note.ui.BaseViewModel
 import com.example.note.ui.MainViewState
 
 class MainViewModel(repository: Repository = Repository) :

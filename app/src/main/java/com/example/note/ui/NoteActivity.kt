@@ -11,7 +11,6 @@ import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import com.example.note.R
 import com.example.note.databinding.ActivityNoteBinding
-import com.example.note.model.Color
 import com.example.note.model.Note
 import com.example.note.viewmodel.NoteViewModel
 import java.text.SimpleDateFormat
@@ -51,7 +50,6 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(ui.root)
         setSupportActionBar(ui.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -64,33 +62,26 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
         val noteId = intent.getStringExtra(EXTRA_NOTE)
         noteId?.let { note ->
             viewModel.loadNote(note)
+        } ?: run {
+            supportActionBar?.title = getString(R.string.new_note_title)
         }
-
-        if (noteId == null) supportActionBar?.title = getString(R.string.new_note_title)
 
         initView()
     }
 
     private fun initView() {
-        ui.titleEt.setText(note?.title ?: "")
-        ui.bodyEt.setText(note?.note ?: "")
+        note?.run {
 
-        val color = when (note?.color) {
-            Color.WHITE -> R.color.color_white
-            Color.BLACK -> R.color.color_black
-            Color.VIOLET -> R.color.color_violet
-            Color.YELLOW -> R.color.color_yellow
-            Color.RED -> R.color.color_red
-            Color.PINK -> R.color.color_pink
-            Color.GREEN -> R.color.color_green
-            Color.BLUE -> R.color.color_blue
-            else -> R.color.color_blue
+            ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteActivity))
+
+            ui.titleEt.setText(title)
+            ui.bodyEt.setText(note)
+
+            supportActionBar?.title = lastChanged.format()
         }
 
-        ui.toolbar.setBackgroundColor(resources.getColor(color))
         ui.titleEt.addTextChangedListener(textChangeListener)
         ui.bodyEt.addTextChangedListener(textChangeListener)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

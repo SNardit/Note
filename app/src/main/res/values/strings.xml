@@ -5,4 +5,10 @@
     <string name="head">Заголовок</string>
     <string name="textNote">Текст заметки</string>
     <string name="new_note_title">New note</string>
+    <string name="snackbar_action">Ok</string>
+    <string name="logout_menu_title">Logout</string>
+    <string name="logout_dialog_title">title</string>
+    <string name="logout_Dialog_message">Are you sure?</string>
+    <string name="ok_bth_title">Ok</string>
+    <string name="logout_dialog_cancel">Cancel</string>
 </resources>

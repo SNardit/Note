@@ -38,6 +38,7 @@ class MainAdapter(private val onItemClickListener: OnItemClickListener) :
         private val ui: ItemNoteBinding = ItemNoteBinding.bind(itemView)
 
         fun bind(note: Note) {
+
             ui.title.text = note.title
             ui.body.text = note.note
 
@@ -54,7 +55,6 @@ class MainAdapter(private val onItemClickListener: OnItemClickListener) :
 
             itemView.setBackgroundResource(color)
             itemView.setOnClickListener { onItemClickListener.onItemClick(note) }
-
         }
     }
 }
