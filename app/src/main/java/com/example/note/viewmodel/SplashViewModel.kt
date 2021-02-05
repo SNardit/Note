@@ -4,7 +4,7 @@ import com.example.note.model.NoAuthException
 import com.example.note.model.Repository
 import com.example.note.ui.SplashViewState
 
-class SplashViewModel(private val repository: Repository = Repository) :
+class SplashViewModel(private val repository: Repository) :
     BaseViewModel<Boolean?, SplashViewState>() {
 
     fun requestUser() {

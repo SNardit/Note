@@ -6,17 +6,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.lifecycle.ViewModelProvider
 import com.example.note.R
 import com.example.note.databinding.ActivityMainBinding
 import com.example.note.model.Note
 import com.example.note.viewmodel.MainViewModel
 import com.firebase.ui.auth.AuthUI
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.LogoutListener {
 
-    override val viewModel: MainViewModel
-            by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    override val viewModel: MainViewModel by viewModel()
 
     override val layoutRes: Int = R.layout.activity_main
 
@@ -62,10 +61,6 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.Lo
 
     }
 
-    companion object {
-        fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
-    }
-
     override fun onLogout() {
         AuthUI.getInstance()
             .signOut(this)
@@ -73,6 +68,10 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.Lo
                 startActivity(Intent(this, SplashActivity::class.java))
                 finish()
             }
+    }
+
+    companion object {
+        fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 }
 

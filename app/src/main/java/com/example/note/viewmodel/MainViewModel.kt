@@ -6,7 +6,7 @@ import com.example.note.model.NoteResults
 import com.example.note.model.Repository
 import com.example.note.ui.MainViewState
 
-class MainViewModel(repository: Repository = Repository) :
+class MainViewModel(repository: Repository) :
     BaseViewModel<List<Note>?, MainViewState>() {
 
     private val notesObserver = object : Observer<NoteResults> {

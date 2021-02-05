@@ -14,11 +14,13 @@ private const val NOTES_COLLECTION = "notes"
 private const val USERS_COLLECTION = "users"
 private val TAG = "${FireStoreProvider::class.java.simpleName} :"
 
-class FireStoreProvider : RemoteDataProvider {
+class FireStoreProvider(
+    private val firebaseAuth: FirebaseAuth,
+    private val db: FirebaseFirestore
+) : RemoteDataProvider {
 
-    private val db = FirebaseFirestore.getInstance()
     private val currentUser
-        get() = FirebaseAuth.getInstance().currentUser
+        get() = firebaseAuth.currentUser
 
     override fun subscribeToAllNotes(): LiveData<NoteResults> =
         MutableLiveData<NoteResults>().apply {
@@ -47,7 +49,7 @@ class FireStoreProvider : RemoteDataProvider {
                     .addOnSuccessListener { snapshot ->
                         value = NoteResults.Success(snapshot.toObject(Note::class.java))
                     }.addOnFailureListener { exception ->
-                        value = NoteResults.Error(exception)
+                        throw exception
                     }
             } catch (e: Throwable) {
                 value = NoteResults.Error(e)
@@ -65,7 +67,7 @@ class FireStoreProvider : RemoteDataProvider {
                         value = NoteResults.Success(note)
                     }.addOnFailureListener { exception ->
                         Log.d(TAG, "Error saving note $note, message: ${exception.message}")
-                        value = NoteResults.Error(exception)
+                        throw exception
                     }
             } catch (e: Throwable) {
                 value = NoteResults.Error(e)
@@ -80,6 +82,27 @@ class FireStoreProvider : RemoteDataProvider {
                     it.email ?: ""
 
                 )
+            }
+        }
+
+    override fun deleteNote(noteId: String): LiveData<NoteResults> =
+        MutableLiveData<NoteResults>().apply {
+
+            try {
+                getUserNoteCollection()
+                    .document(noteId)
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Note $noteId is deleted")
+                        value = NoteResults.Success(null)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d(TAG, "Error note delete $noteId, message: ${exception.message}")
+                        throw exception
+                    }
+
+            } catch (e: Throwable) {
+                value = NoteResults.Error(e)
             }
         }
 

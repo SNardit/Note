@@ -11,4 +11,8 @@
     <string name="logout_Dialog_message">Are you sure?</string>
     <string name="ok_bth_title">Ok</string>
     <string name="logout_dialog_cancel">Cancel</string>
+    <string name="change_color_menu_title">Color</string>
+    <string name="delete_menu_title">Delete</string>
+    <string name="delete_dialog_msg">Delete?</string>
+    <string name="delete_cancel_btn">Cancel</string>
 </resources>
