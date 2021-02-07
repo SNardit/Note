@@ -19,7 +19,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        style="@style/indent_appbar_activity_note"
+        style="@style/ActivityNoteAppBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -41,7 +41,7 @@
 
         <EditText
             android:id="@+id/bodyEt"
-            style="@style/indent_edit_text_activity_note"
+            style="@style/ActivityNoteEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"

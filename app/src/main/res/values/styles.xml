@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="margin_title">
+    <style name="ItemNoteTitle">
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:layout_marginTop">8dp</item>
@@ -15,26 +15,27 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="margin_and_size_text">
+    <style name="ItemNoteBody">
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="margin_fab">
+    <style name="ActivityMainFAB">
         <item name="android:layout_marginEnd">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
-    <style name="indent_appbar_activity_note">
+    <style name="ActivityNoteAppBar">
         <item name="android:padding">16dp</item>
     </style>
-    <style name="indent_edit_text_activity_note">
+
+    <style name="ActivityNoteEditText">
         <item name="android:layout_marginTop">16dp</item>
     </style>
 
-    <style name="indent_item_note_card_view">
+    <style name="ItemNoteCardView">
         <item name="android:layout_marginStart">4dp</item>
         <item name="android:layout_marginEnd">4dp</item>
         <item name="android:layout_marginTop">4dp</item>
