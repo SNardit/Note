@@ -19,7 +19,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-private const val SAVE_DELAY = 2000L
+private const val SAVE_DELAY = 1000L
 
 class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
 
@@ -70,6 +70,8 @@ class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
             supportActionBar?.title = getString(R.string.new_note_title)
         }
 
+        setEditListener()
+
         ui.colorPicker.onColorClickListener = {
             color = it
             setToolbarColor(it)
@@ -87,13 +89,13 @@ class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
             if (note != ui.bodyEt.text.toString()) {
                 ui.bodyEt.setText(note)
             }
-            saveEditListener()
+            setEditListener()
 
             supportActionBar?.title = lastChanged.format()
             setToolbarColor(color)
         }
 
-        saveEditListener()
+        setEditListener()
     }
 
     private fun setToolbarColor(color: Color) {
@@ -156,7 +158,7 @@ class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
         initView()
     }
 
-    private fun saveEditListener() {
+    private fun setEditListener() {
         ui.titleEt.addTextChangedListener(textChangeListener)
         ui.bodyEt.addTextChangedListener(textChangeListener)
     }

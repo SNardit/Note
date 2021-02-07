@@ -1,5 +1,6 @@
 package com.example.note.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.Observer
 import com.example.note.model.Note
 import com.example.note.model.NoteResults
@@ -10,17 +11,15 @@ class MainViewModel(repository: Repository) :
     BaseViewModel<List<Note>?, MainViewState>() {
 
     private val notesObserver = object : Observer<NoteResults> {
-        override fun onChanged(t: NoteResults?) {
-            if (t == null) return
+        override fun onChanged(result: NoteResults?) {
+            if (result == null) return
 
-            when (t) {
-                is NoteResults.Success<*> -> {
-                    viewStateLiveData.value = MainViewState(notes = t.data as? List<Note>)
+            when (result) {
+                is NoteResults.Success<*> ->
+                    viewStateLiveData.value = MainViewState(notes = result.data as? List<Note>)
+                is NoteResults.Error ->
+                    viewStateLiveData.value = MainViewState(error = result.error)
 
-                }
-                is NoteResults.Error -> {
-                    viewStateLiveData.value = MainViewState(error = t.error)
-                }
             }
         }
     }
@@ -32,7 +31,8 @@ class MainViewModel(repository: Repository) :
         repositoryNotes.observeForever(notesObserver)
     }
 
-    override fun onCleared() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    public override fun onCleared() {
         repositoryNotes.removeObserver(notesObserver)
     }
 }
