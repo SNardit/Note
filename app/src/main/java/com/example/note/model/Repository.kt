@@ -4,14 +4,14 @@ import com.example.note.model.providers.RemoteDataProvider
 
 class Repository(private val remoteProvider: RemoteDataProvider) {
 
-    fun getNotes() = remoteProvider.subscribeToAllNotes()
+    suspend fun getNotes() = remoteProvider.subscribeToAllNotes()
 
-    fun saveNote(note: Note) = remoteProvider.saveNote(note)
+    suspend fun saveNote(note: Note) = remoteProvider.saveNote(note)
 
-    fun getNoteById(id: String) = remoteProvider.getNoteById(id)
+    suspend fun getNoteById(id: String) = remoteProvider.getNoteById(id)
 
-    fun getCurrentUser() = remoteProvider.getCurrentUser()
+    suspend fun getCurrentUser() = remoteProvider.getCurrentUser()
 
-    fun deleteNote(noteId: String) = remoteProvider.deleteNote(noteId)
+    suspend fun deleteNote(noteId: String) = remoteProvider.deleteNote(noteId)
 
 }

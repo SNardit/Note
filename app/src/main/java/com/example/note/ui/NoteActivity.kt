@@ -3,8 +3,6 @@ package com.example.note.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -15,13 +13,15 @@ import com.example.note.databinding.ActivityNoteBinding
 import com.example.note.model.Color
 import com.example.note.model.Note
 import com.example.note.viewmodel.NoteViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 private const val SAVE_DELAY = 1000L
 
-class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
+class NoteActivity : BaseActivity<NoteViewState.Data>() {
 
     companion object {
         const val EXTRA_NOTE = "NoteActivity.extra.NOTE"
@@ -138,7 +138,8 @@ class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
     fun triggerSaveNote() {
         if (ui.titleEt.text == null || ui.titleEt.text!!.length < 3) return
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        launch {
+            delay(SAVE_DELAY)
             note = note?.copy(
                 title = ui.titleEt.text.toString(),
                 note = ui.bodyEt.text.toString(),
@@ -147,7 +148,8 @@ class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
             ) ?: createNewNote()
 
             if (note != null) viewModel.saveChanges(note!!)
-        }, SAVE_DELAY)
+        }
+
     }
 
     override fun renderData(data: NoteViewState.Data) {

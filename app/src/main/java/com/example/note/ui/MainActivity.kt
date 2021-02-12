@@ -13,7 +13,7 @@ import com.example.note.viewmodel.MainViewModel
 import com.firebase.ui.auth.AuthUI
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.LogoutListener {
+class MainActivity : BaseActivity<List<Note>?>(), LogoutDialog.LogoutListener {
 
     override val viewModel: MainViewModel by viewModel()
 
@@ -74,5 +74,3 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.Lo
         fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 }
-
-
